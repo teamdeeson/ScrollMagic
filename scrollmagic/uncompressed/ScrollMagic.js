@@ -1971,11 +1971,20 @@
 					// add scrollDistance
 					fixedPos[containerInfo.vertical ? "top" : "left"] += scrollDistance;
 
-					// set new values
-					_util.css(_pinOptions.spacer.firstChild, {
-						top: fixedPos.top,
-						left: fixedPos.left
-					});
+					if ((2 > (pinTarget.offsetTop - fixedPos.top)) && ((pinTarget.offsetTop - fixedPos.top) > -2)) {
+						// set new values
+						_util.css(_pinOptions.spacer.firstChild, {
+							top: pinTarget.offsetTop,
+							left: fixedPos.left
+						});
+					} else {
+						// set new values
+						_util.css(_pinOptions.spacer.firstChild, {
+							top: fixedPos.top.toFixed(0),
+							left: fixedPos.left
+						});
+					}
+
 				} else {
 					// unpinned state
 					var

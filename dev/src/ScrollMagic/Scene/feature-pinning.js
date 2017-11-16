@@ -31,7 +31,6 @@ var updatePinState = function (forceUnpin) {
 		var 
 			containerInfo = _controller.info(),
 			pinTarget = _pinOptions.spacer.firstChild; // may be pin element or another spacer, if cascading pins
-
 		if (!forceUnpin && _state === SCENE_STATE_DURING) { // during scene or if duration is 0 and we are past the trigger
 			// pinned state
 			if (_util.css(pinTarget, "position") != "fixed") {
@@ -50,11 +49,20 @@ var updatePinState = function (forceUnpin) {
 			// add scrollDistance
 			fixedPos[containerInfo.vertical ? "top" : "left"] += scrollDistance;
 
-			// set new values
-			_util.css(_pinOptions.spacer.firstChild, {
-				top: fixedPos.top,
-				left: fixedPos.left
-			});
+			if ((2 > (pinTarget.offsetTop - fixedPos.top)) &&  ((pinTarget.offsetTop - fixedPos.top) > -2) ) {
+				// set new values
+				_util.css(_pinOptions.spacer.firstChild, {
+					top: pinTarget.offsetTop,
+					left: fixedPos.left
+				});
+			} else {
+				// set new values
+				_util.css(_pinOptions.spacer.firstChild, {
+					top: fixedPos.top.toFixed(0),
+					left: fixedPos.left
+				});
+			}
+
 		} else {
 			// unpinned state
 			var
